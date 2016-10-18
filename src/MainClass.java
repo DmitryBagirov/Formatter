@@ -26,6 +26,10 @@ public class MainClass {
     public static void main(String[] args) throws IOException {
         int level = 0;
         int skip = 0;
+        if (args.length == 0) {
+                System.out.print("Error! PLease set filename as parameter\n");
+            return;
+        }
         String text = getTextFromfile(args[0]);
         StringBuilder formattedString = new StringBuilder();
         for (int pos = 0; pos < text.length(); ++pos ) {
