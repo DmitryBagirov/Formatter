@@ -25,7 +25,11 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2016</copyright>
     <item>
+<<<<<<< HEAD
       <title>File: 3,
+=======
+      <title>File: 2,
+>>>>>>> 2b3ea118b220caa0a3ca9acd3508f02924c43c6d
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -46,6 +50,7 @@ under the License.
           <tbody>
                           <tr>
                 <td>
+<<<<<<< HEAD
                   <a href="${project.url}/checkstyle.html#com.company.Formatter.java">com/company/Formatter.java</a>
                 </td>
                 <td>
@@ -60,6 +65,8 @@ under the License.
               </tr>
                           <tr>
                 <td>
+=======
+>>>>>>> 2b3ea118b220caa0a3ca9acd3508f02924c43c6d
                   <a href="${project.url}/checkstyle.html#com.company.MainClass.java">com/company/MainClass.java</a>
                 </td>
                 <td>
