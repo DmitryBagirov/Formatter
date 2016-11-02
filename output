@@ -1,14 +1,12 @@
 public static void main(String[] args){
 	gerb;
-	for(int i = 0;i < 234; i++){
-		while(true){
-			doit();
-		}
+	hile(true){
+		doit();
 	}
 }
 public static void main(String[] args){
 	gerb;
-	while(true){
+	hile(true){
 		doit();
 	}
 }

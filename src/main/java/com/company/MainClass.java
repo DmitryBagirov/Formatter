@@ -11,6 +11,7 @@ final class MainClass {
      */
     private MainClass() {
     }
+
     /**
      * @param args params from command line
      * @throws IOException erro
@@ -21,6 +22,7 @@ final class MainClass {
 //                    + "output filename as parameter\n");
 //            return;
 //        }
-        Formatter.format("input", "output");
+        Formatter f = new Formatter();
+        f.format("input", "output");
     }
 }
