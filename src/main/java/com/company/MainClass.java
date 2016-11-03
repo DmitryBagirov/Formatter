@@ -7,12 +7,6 @@ import java.io.IOException;
  */
 final class MainClass {
     /**
-     *
-     */
-    private MainClass() {
-    }
-
-    /**
      * @param args params from command line
      * @throws IOException erro
      */
