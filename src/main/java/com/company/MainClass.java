@@ -7,6 +7,12 @@ import java.io.IOException;
  */
 final class MainClass {
     /**
+     * singleton.
+     */
+    private MainClass() {
+        System.out.println("dv");
+    }
+    /**
      * @param args params from command line
      * @throws IOException erro
      */
@@ -17,6 +23,8 @@ final class MainClass {
 //            return;
 //        }
         Formatter f = new Formatter();
-        f.format("input", "output");
+        Reader r = new Reader("input");
+        Writer w = new Writer("output");
+        f.format(r, w);
     }
 }

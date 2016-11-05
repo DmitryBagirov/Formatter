@@ -15,14 +15,12 @@ final class Formatter implements IFormatter {
     /**
      * format code.
      *
-     * @param in  input file name
-     * @param out output file name
+     * @param r  input
+     * @param w output
      * @throws IOException err
      */
-    public void format(final String in, final String out) throws IOException {
+    public void format(final IReader r, final IWriter w) throws IOException {
         int level = 0;
-        Reader r = new Reader(in);
-        Writer w = new Writer(out);
         char ch;
         while (r.hasChars()) {
             ch = r.readChar();

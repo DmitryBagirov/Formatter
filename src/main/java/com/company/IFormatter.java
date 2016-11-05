@@ -10,9 +10,9 @@ interface IFormatter {
     /**
      * format code.
      *
-     * @param in  input file name
-     * @param out output file name
+     * @param r  input
+     * @param w  output
      * @throws IOException err
      */
-    void format(String in, String out) throws IOException;
+    void format(IReader r, IWriter w) throws IOException;
 }

@@ -3,9 +3,7 @@ package com.company;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 import static org.junit.Assert.*;
 
@@ -15,15 +13,19 @@ import static org.junit.Assert.*;
 public class FormatterTest {
 
     private Formatter f;
+    private Reader r;
+    private Writer w;
 
     @Before
     public void setUp() throws IOException {
         f = new Formatter();
+        r = new Reader("input");
+        w = new Writer("output");
     }
 
     @Test
     public void format() throws Exception {
-        f.format("input", "output");
+        f.format(r, w);
         BufferedReader template = new BufferedReader(new FileReader("template"));
         BufferedReader result = new BufferedReader(new FileReader("output"));
         StringBuilder s2 = new StringBuilder();
