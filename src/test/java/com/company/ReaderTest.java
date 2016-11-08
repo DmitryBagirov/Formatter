@@ -3,10 +3,7 @@ package com.company;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 
 import static org.junit.Assert.*;
 
@@ -23,12 +20,21 @@ public class ReaderTest {
     }
 
     @Test
-    public void hasChars() throws Exception {
-        assertEquals("hasChars", true, r.hasChars()) ;
+    public void hasChars() throws IOException {
+        assertEquals("hasChars", true, r.hasChars());
     }
 
     @Test
     public void readChar() throws Exception {
         assertEquals("readChar", (char) rr.read(), r.readChar());
+    }
+
+    @Test
+    public void readString() throws Exception {
+        char[] expected = new char[50];
+        String actual;
+        rr.read(expected, 0, 50);
+        actual = r.readString();
+        assertEquals("readChar", String.valueOf(expected), actual);
     }
 }

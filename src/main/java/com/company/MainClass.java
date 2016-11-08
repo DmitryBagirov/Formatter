@@ -9,12 +9,12 @@ final class MainClass {
     /**
      * singleton.
      */
-    private MainClass() {
-        System.out.println("dv");
-    }
+    private MainClass() { }
+
     /**
+     *
      * @param args params from command line
-     * @throws IOException erro
+     * @throws IOException exception
      */
     public static void main(final String[] args) throws IOException {
 //        if (args.length < 2) {

@@ -13,7 +13,10 @@ class Reader implements IReader {
      * file.
      */
     private BufferedReader buffer;
-
+    /**
+     * length of reading string.
+     */
+    private final int strLen = 4;
     /**
      * @param file Input file name
      * @throws FileNotFoundException throws when file not found
@@ -36,5 +39,16 @@ class Reader implements IReader {
      */
     public char readChar() throws IOException {
         return (char) buffer.read();
+    }
+
+    /**
+     * read string from file.
+     * @return string
+     * @throws IOException error
+     */
+    public String readString() throws IOException {
+        char[] buf = new char[strLen];
+        int checkstyle = buffer.read(buf, 0, strLen);
+        return String.valueOf(buf);
     }
 }

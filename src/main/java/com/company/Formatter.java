@@ -7,6 +7,10 @@ import java.io.IOException;
  */
 final class Formatter implements IFormatter {
     /**
+     * next char from file.
+     */
+    private char nextChar;
+    /**
      *
      */
     Formatter() {
@@ -21,51 +25,66 @@ final class Formatter implements IFormatter {
      */
     public void format(final IReader r, final IWriter w) throws IOException {
         int level = 0;
-        char ch;
+        StringBuilder sb = new StringBuilder();
         while (r.hasChars()) {
-            ch = r.readChar();
-            if (ch < ' ') {
-                continue;
-            }
-            switch (ch) {
-                case '{':
-                    level++;
-                    w.writeChar(ch);
-                    w.writeChar('\n');
-                    for (int i = 0; i < level; ++i) {
-                        w.writeChar('\t');
-                    }
-                    break;
-                case '}':
-                    level--;
-                    //formattedString.deleteCharAt(formattedString.length() - 1)
-                    w.writeChar(ch);
-                    w.writeChar('\n');
-                    for (int i = 0; i < level; ++i) {
-                        w.writeChar('\t');
-                    }
-                    break;
-                case ';':
-                    w.writeChar(ch);
-                    w.writeChar('\n');
-                    boolean app = false;
-                    if (r.readChar() == '}') {
+            String test = safeReadString(r);
+            for (char ch : test.toCharArray()) {
+                if (ch < ' ') {
+                    continue;
+                }
+                switch (ch) {
+                    case '{':
+                        level++;
+                        sb.append(ch).append('\n');
+                        for (int i = 0; i < level; ++i) {
+                            sb.append('\t');
+                        }
+                        break;
+                    case '}':
                         level--;
-                        app = true;
-                    }
-                    for (int i = 0; i < level; ++i) {
-                        w.writeChar('\t');
-                    }
-                    if (app) { // додумать нормальный вариант
-                        w.writeChar('}');
-                        w.writeChar('\n');
-                    }
-                    break;
-                default:
-                    w.writeChar(ch);
-                    break;
+                        sb.deleteCharAt(sb.length() - 1);
+                        sb.append(ch);
+                        sb.append('\n');
+                        for (int i = 0; i < level; ++i) {
+                            sb.append('\t');
+                        }
+                        break;
+                    case ';':
+                        sb.append(ch);
+                        sb.append('\n');
+                        for (int i = 0; i < level; ++i) {
+                            sb.append('\t');
+                        }
+                        break;
+                    default:
+                        sb.append(ch);
+                        break;
+                }
             }
+            w.writeString(sb.toString());
+            sb.setLength(0);
         }
         w.close();
     }
+
+    /**
+     * safe read string to avoid errors in format().
+     * @param r reader
+     * @return string from file
+     * @throws IOException error
+     */
+    public String safeReadString(final IReader r) throws IOException {
+        StringBuilder buff = new StringBuilder();
+        buff.append(nextChar);
+        buff.append(r.readString());
+        while (r.hasChars()) {
+            nextChar = r.readChar();
+            if (nextChar != '}') {
+                break;
+            }
+            buff.append(nextChar);
+        }
+        return buff.toString();
+    }
+
 }
