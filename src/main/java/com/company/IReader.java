@@ -17,11 +17,4 @@ interface IReader {
      * @throws IOException error
      */
     char readChar() throws IOException;
-
-    /**
-     *
-     * @return string from file
-     * @throws IOException error
-     */
-    String readString() throws IOException;
 }

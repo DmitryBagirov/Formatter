@@ -28,13 +28,4 @@ public class ReaderTest {
     public void readChar() throws Exception {
         assertEquals("readChar", (char) rr.read(), r.readChar());
     }
-
-    @Test
-    public void readString() throws Exception {
-        char[] expected = new char[50];
-        String actual;
-        rr.read(expected, 0, 50);
-        actual = r.readString();
-        assertEquals("readChar", String.valueOf(expected), actual);
-    }
 }

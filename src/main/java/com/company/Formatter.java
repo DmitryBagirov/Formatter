@@ -7,84 +7,145 @@ import java.io.IOException;
  */
 final class Formatter implements IFormatter {
     /**
-     * next char from file.
+     * next & last considered char from file.
+     */
+    private int level;
+    /**
+     * nextchar.
      */
     private char nextChar;
     /**
-     *
+     * result.
+     */
+    private StringBuilder result;
+    /**
+     * current string.
+     */
+    private String currStr;
+    /**
+     * flags.
+     */
+    private boolean isString, isComment;
+
+    /**
+     * constructor lego.
      */
     Formatter() {
+        result = new StringBuilder();
     }
 
     /**
      * format code.
      *
-     * @param r  input
+     * @param r input
      * @param w output
      * @throws IOException err
      */
     public void format(final IReader r, final IWriter w) throws IOException {
-        int level = 0;
-        StringBuilder sb = new StringBuilder();
         while (r.hasChars()) {
-            String test = safeReadString(r);
-            for (char ch : test.toCharArray()) {
-                if (ch < ' ') {
-                    continue;
-                }
+            currStr = safeReadString(r);
+            for (int j = 0; j < currStr.length(); ++j) {
+                char ch = currStr.charAt(j);
                 switch (ch) {
                     case '{':
-                        level++;
-                        sb.append(ch).append('\n');
-                        for (int i = 0; i < level; ++i) {
-                            sb.append('\t');
+                        if (isComment || isString) {
+                            result.append(ch);
+                            break;
                         }
+                        level++;
+                        result.append(ch).append('\n');
+                        writeTabs();
                         break;
                     case '}':
-                        level--;
-                        sb.deleteCharAt(sb.length() - 1);
-                        sb.append(ch);
-                        sb.append('\n');
-                        for (int i = 0; i < level; ++i) {
-                            sb.append('\t');
+                        if (isComment || isString) {
+                            result.append(ch);
+                            break;
                         }
+                        level--;
+                        result.append('\n');
+                        writeTabs();
+                        result.append(ch);
                         break;
                     case ';':
-                        sb.append(ch);
-                        sb.append('\n');
-                        for (int i = 0; i < level; ++i) {
-                            sb.append('\t');
+                        if (isComment || isString) {
+                            result.append(ch);
+                            break;
+                        }
+                        result.append(ch);
+                        if (!currStr.contains("/")) {
+                            result.append('\n');
+                            writeTabs();
                         }
                         break;
+                    case '/':
+                        if (currStr.charAt(j + 1) == '/') {
+                            isComment = true;
+                            result.append(ch);
+                            break;
+                        } else if (currStr.charAt(j + 1) == '*') {
+                            result.append("/*");
+                            j++;
+                            break;
+                        }
+                        result.append(ch);
+                        break;
+                    case '*':
+                        result.append(ch);
+                        break;
+                    case '\n':
+                        if (isComment || isString) {
+                            isComment = false;
+                            result.append(ch);
+                        }
+                        writeTabs();
+                        break;
+                    case '"':
+                        if (isString && currStr.charAt(j - 1) == '\\') {
+                            result.append(ch);
+                            break;
+                        }
+                        isString = !isString;
                     default:
-                        sb.append(ch);
+                        result.append(ch);
                         break;
                 }
             }
-            w.writeString(sb.toString());
-            sb.setLength(0);
+            w.writeString(result.toString());
+            result.setLength(0);
         }
         w.close();
     }
 
     /**
+     * writes tabs.
+     */
+    private void writeTabs() {
+        for (int i = 0; i < level; ++i) {
+            result.append('\t');
+        }
+    }
+
+    /**
      * safe read string to avoid errors in format().
+     *
      * @param r reader
      * @return string from file
      * @throws IOException error
      */
-    public String safeReadString(final IReader r) throws IOException {
+    String safeReadString(final IReader r) throws IOException {
         StringBuilder buff = new StringBuilder();
-        buff.append(nextChar);
-        buff.append(r.readString());
         while (r.hasChars()) {
             nextChar = r.readChar();
-            if (nextChar != '}') {
+            if (nextChar != '}' && nextChar != '/' && nextChar != ' '
+                    && nextChar != '\\' && nextChar != '"'
+                    && nextChar != '\t' && nextChar != '\n'
+                    && nextChar != ')' && nextChar != '*' && nextChar != ';') {
                 break;
             }
             buff.append(nextChar);
         }
-        return buff.toString();
+        buff.append(nextChar);
+        return buff.toString().replaceAll(" +", " ");
     }
 
 }

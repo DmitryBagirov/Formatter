@@ -1,4 +1,4 @@
-public static void main(String[] args) {
+public   static        void main(String[] args)     {
 	gerb;
 	while(true){
 		int i=doit("\"kukareku\"-doness9 golos iz parashi.while(kukarek){suck();}");//some function
