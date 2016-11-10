@@ -13,6 +13,7 @@ interface IFormatter {
      * @param r  input
      * @param w  output
      * @throws IOException err
+     * @throws ReaderException err
      */
-    void format(IReader r, IWriter w) throws IOException;
+    void format(IReader r, IWriter w) throws IOException, ReaderException;
 }

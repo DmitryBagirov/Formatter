@@ -15,8 +15,10 @@ final class MainClass {
      *
      * @param args params from command line
      * @throws IOException exception
+     * @throws ReaderException exception
      */
-    public static void main(final String[] args) throws IOException {
+    public static void main(final String[] args)
+            throws IOException, ReaderException {
 //        if (args.length < 2) {
 //            System.out.print("Error! PLease set input and "
 //                    + "output filename as parameter\n");

@@ -23,10 +23,14 @@ class Reader implements IReader {
 
     /**
      * @return returns false if EOF otherwise true
-     * @throws IOException error
+     * @throws ReaderException error
      */
-    public boolean hasChars() throws IOException {
-        return buffer.ready();
+    public boolean hasChars() throws ReaderException {
+        try {
+            return buffer.ready();
+        } catch (IOException e) {
+            throw new ReaderException("no more chars");
+        }
     }
 
     /**

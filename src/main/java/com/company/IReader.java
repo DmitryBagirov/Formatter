@@ -8,9 +8,9 @@ import java.io.IOException;
 interface IReader {
     /**
      * @return returns false if EOF otherwise true
-     * @throws IOException error
+     * @throws ReaderException error
      */
-    boolean hasChars() throws  IOException;
+    boolean hasChars() throws  ReaderException;
 
     /**
      * @return read char from file

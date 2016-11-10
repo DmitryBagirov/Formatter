@@ -1,9 +1,9 @@
 public static void main(String[] args) {
 	gerb;
 	while(true){
-		int i=doit("\"kukareku\"-doness9 golos iz kur9tnika.while(kukarek){koko();}");//some function
+		int i=doit("\"kukareku\"-doness9 golos iz kur9tnika.while(kukarek){sdf();kokoko();}");//some function
 		/*while(fsf){
-			int i=++i+i++;
+			int i=++i+i++;//wwefwef
 		}*/
 	}
 }

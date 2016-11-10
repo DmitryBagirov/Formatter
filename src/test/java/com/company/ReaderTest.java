@@ -20,7 +20,7 @@ public class ReaderTest {
     }
 
     @Test
-    public void hasChars() throws IOException {
+    public void hasChars() throws ReaderException {
         assertEquals("hasChars", true, r.hasChars());
     }
 

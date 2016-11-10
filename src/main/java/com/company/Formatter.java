@@ -25,7 +25,7 @@ final class Formatter implements IFormatter {
     /**
      * flags.
      */
-    private boolean isString, isComment;
+    private boolean isString, isComment, isBlockComment;
 
     /**
      * constructor lego.
@@ -40,8 +40,10 @@ final class Formatter implements IFormatter {
      * @param r input
      * @param w output
      * @throws IOException err
+     * @throws ReaderException err
      */
-    public void format(final IReader r, final IWriter w) throws IOException {
+    public void format(final IReader r, final IWriter w)
+            throws IOException, ReaderException {
         while (r.hasChars()) {
             currStr = safeReadString(r);
             for (int j = 0; j < currStr.length(); ++j) {
@@ -56,26 +58,32 @@ final class Formatter implements IFormatter {
                         result.append(ch).append('\n');
                         writeTabs();
                         break;
-                    case '}':
-                        if (isComment || isString) {
-                            result.append(ch);
-                            break;
-                        }
-                        level--;
-                        result.append('\n');
-                        writeTabs();
-                        result.append(ch);
-                        break;
                     case ';':
                         if (isComment || isString) {
                             result.append(ch);
                             break;
                         }
                         result.append(ch);
-                        if (!currStr.contains("/")) {
+                        if (currStr.charAt(j + 1) != '/') {
                             result.append('\n');
                             writeTabs();
+                            break;
                         }
+                        break;
+                    case '}':
+                        if (isComment || isString) {
+                            result.append(ch);
+                            break;
+                        }
+                        level--;
+                        result.deleteCharAt(result.lastIndexOf("\t"));
+                        result.append(ch);
+                        if (j + 1 < currStr.length()
+                                && currStr.charAt(j + 1) == '*') {
+                            break;
+                        }
+                        result.append('\n');
+                        writeTabs();
                         break;
                     case '/':
                         if (currStr.charAt(j + 1) == '/') {
@@ -83,6 +91,7 @@ final class Formatter implements IFormatter {
                             result.append(ch);
                             break;
                         } else if (currStr.charAt(j + 1) == '*') {
+                            isBlockComment = true;
                             result.append("/*");
                             j++;
                             break;
@@ -90,10 +99,17 @@ final class Formatter implements IFormatter {
                         result.append(ch);
                         break;
                     case '*':
+                        if (currStr.charAt(j + 1) == '/') {
+                            isBlockComment = false;
+                            result.append("*/\n");
+                            writeTabs();
+                            j++;
+                            break;
+                        }
                         result.append(ch);
                         break;
                     case '\n':
-                        if (isComment || isString) {
+                        if ((isComment || isString)) {
                             isComment = false;
                             result.append(ch);
                         }
@@ -131,8 +147,9 @@ final class Formatter implements IFormatter {
      * @param r reader
      * @return string from file
      * @throws IOException error
+     * @throws ReaderException error
      */
-    String safeReadString(final IReader r) throws IOException {
+    String safeReadString(final IReader r) throws IOException, ReaderException {
         StringBuilder buff = new StringBuilder();
         while (r.hasChars()) {
             nextChar = r.readChar();
@@ -140,12 +157,11 @@ final class Formatter implements IFormatter {
                     && nextChar != '\\' && nextChar != '"'
                     && nextChar != '\t' && nextChar != '\n'
                     && nextChar != ')' && nextChar != '*' && nextChar != ';') {
+                buff.append(nextChar);
                 break;
             }
             buff.append(nextChar);
         }
-        buff.append(nextChar);
         return buff.toString().replaceAll(" +", " ");
     }
-
 }
