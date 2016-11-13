@@ -20,11 +20,4 @@ interface IWriter {
      * @throws IOException err
      */
     void close() throws IOException;
-
-    /**
-     *
-     * @param str string which need to write
-     * @throws IOException error
-     */
-    void writeString(String str) throws IOException;
 }

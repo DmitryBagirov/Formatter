@@ -39,17 +39,4 @@ class Writer implements IWriter {
     public void close() throws IOException {
         buffer.close();
     }
-
-    /**
-     * write string.
-     * @param str string
-     * @throws IOException error
-     */
-    public void writeString(final String str) throws IOException {
-        for (char ch: str.toCharArray()) {
-            writeChar(ch);
-        }
-    }
-
-
 }

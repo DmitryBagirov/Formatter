@@ -15,35 +15,33 @@ final class Formatter implements IFormatter {
      */
     private char nextChar;
     /**
-     * result.
-     */
-    private StringBuilder result;
-    /**
-     * current string.
-     */
-    private String currStr;
-    /**
      * flags.
      */
-    private boolean isString, isComment, isBlockComment;
+    private boolean isString, isComment;
+    /**
+     * writer
+     */
+    private IWriter w;
 
     /**
      * constructor lego.
      */
     Formatter() {
-        result = new StringBuilder();
+
     }
 
     /**
      * format code.
      *
-     * @param r input
-     * @param w output
-     * @throws IOException err
+     * @param r  input
+     * @param wr output
+     * @throws IOException     err
      * @throws ReaderException err
      */
-    public void format(final IReader r, final IWriter w)
+    public void format(final IReader r, final IWriter wr)
             throws IOException, ReaderException {
+        w = wr;
+        String currStr;
         while (r.hasChars()) {
             currStr = safeReadString(r);
             for (int j = 0; j < currStr.length(); ++j) {
@@ -51,83 +49,94 @@ final class Formatter implements IFormatter {
                 switch (ch) {
                     case '{':
                         if (isComment || isString) {
-                            result.append(ch);
+                            w.writeChar(ch);
                             break;
                         }
                         level++;
-                        result.append(ch).append('\n');
+                        w.writeChar(ch);
+                        w.writeChar('\n');
                         writeTabs();
                         break;
                     case ';':
                         if (isComment || isString) {
-                            result.append(ch);
+                            w.writeChar(ch);
                             break;
                         }
-                        result.append(ch);
+                        w.writeChar(ch);
                         if (currStr.charAt(j + 1) != '/') {
-                            result.append('\n');
+                            w.writeChar('\n');
                             writeTabs();
                             break;
+                        } else if (currStr.charAt(j + 1) == '}') {
+                            w.writeChar('\n');
+                            level--;
+                            writeTabs();
                         }
                         break;
                     case '}':
                         if (isComment || isString) {
-                            result.append(ch);
+                            w.writeChar(ch);
                             break;
                         }
                         level--;
-                        result.deleteCharAt(result.lastIndexOf("\t"));
-                        result.append(ch);
+                        w.writeChar(ch);
                         if (j + 1 < currStr.length()
                                 && currStr.charAt(j + 1) == '*') {
                             break;
                         }
-                        result.append('\n');
+                        w.writeChar('\n');
                         writeTabs();
                         break;
                     case '/':
                         if (currStr.charAt(j + 1) == '/') {
                             isComment = true;
-                            result.append(ch);
+                            w.writeChar(ch);
                             break;
                         } else if (currStr.charAt(j + 1) == '*') {
-                            isBlockComment = true;
-                            result.append("/*");
+                            w.writeChar('/');
+                            w.writeChar('*');
                             j++;
                             break;
                         }
-                        result.append(ch);
+                        w.writeChar(ch);
                         break;
                     case '*':
                         if (currStr.charAt(j + 1) == '/') {
-                            isBlockComment = false;
-                            result.append("*/\n");
+                            w.writeChar('*');
+                            w.writeChar('/');
+                            w.writeChar('\n');
                             writeTabs();
                             j++;
                             break;
                         }
-                        result.append(ch);
+                        w.writeChar(ch);
                         break;
+                    case '\r':
+                        if (currStr.charAt(j + 1) == '\n') {
+                            j++;
+                        }
                     case '\n':
-                        if ((isComment || isString)) {
-                            isComment = false;
-                            result.append(ch);
+                        if (!isComment) {
+                            break;
+                        }
+                        isComment = false;
+                        w.writeChar(ch);
+                        if (currStr.charAt(j + 1) == '}') {
+                            level--;
                         }
                         writeTabs();
                         break;
                     case '"':
                         if (isString && currStr.charAt(j - 1) == '\\') {
-                            result.append(ch);
+                            w.writeChar(ch);
                             break;
                         }
                         isString = !isString;
                     default:
-                        result.append(ch);
+                        w.writeChar(ch);
                         break;
                 }
             }
-            w.writeString(result.toString());
-            result.setLength(0);
         }
         w.close();
     }
@@ -135,9 +144,9 @@ final class Formatter implements IFormatter {
     /**
      * writes tabs.
      */
-    private void writeTabs() {
+    private void writeTabs() throws IOException {
         for (int i = 0; i < level; ++i) {
-            result.append('\t');
+            w.writeChar('\t');
         }
     }
 
@@ -146,17 +155,19 @@ final class Formatter implements IFormatter {
      *
      * @param r reader
      * @return string from file
-     * @throws IOException error
+     * @throws IOException     error
      * @throws ReaderException error
      */
     String safeReadString(final IReader r) throws IOException, ReaderException {
         StringBuilder buff = new StringBuilder();
+        char nextChar;
         while (r.hasChars()) {
             nextChar = r.readChar();
             if (nextChar != '}' && nextChar != '/' && nextChar != ' '
                     && nextChar != '\\' && nextChar != '"'
                     && nextChar != '\t' && nextChar != '\n'
-                    && nextChar != ')' && nextChar != '*' && nextChar != ';') {
+                    && nextChar != ')' && nextChar != '*' && nextChar != ';'
+                    && nextChar != '\r') {
                 buff.append(nextChar);
                 break;
             }

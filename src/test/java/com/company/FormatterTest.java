@@ -31,11 +31,12 @@ public class FormatterTest {
         StringBuilder s2 = new StringBuilder();
         StringBuilder s1 = new StringBuilder();
         while (template.ready()) {
-            s1.append(template.read());
+            s1.append((char)template.read());
         }
         while (result.ready()) {
-            s2.append(result.read());
+            s2.append((char)result.read());
         }
+        System.out.print(s1);
         assertEquals("Format", s1.toString(), s2.toString());
     }
 
