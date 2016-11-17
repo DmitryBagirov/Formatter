@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * file reader.
  */
-interface IReader {
+public interface IReader {
     /**
      * @return returns false if EOF otherwise true
      * @throws ReaderException error

@@ -40,9 +40,4 @@ public class FormatterTest {
         assertEquals("Format", s1.toString(), s2.toString());
     }
 
-    @Test
-    public void safeReadString() throws Exception {
-        String actual = f.safeReadString(r);
-        assertEquals(actual, actual);
-    }
 }

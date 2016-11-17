@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * file writer.
  */
-interface IWriter {
+public interface IWriter {
     /**
      * write char to file.
      *
