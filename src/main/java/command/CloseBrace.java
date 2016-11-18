@@ -3,7 +3,7 @@ package command;
 import java.io.IOException;
 
 /**
- * for }
+ * for }.
  */
 class CloseBrace implements Command {
     /**
@@ -12,18 +12,18 @@ class CloseBrace implements Command {
      */
     public void execute(final Context c) {
         try {
-            if (c.isComment || c.isString) {
-                c.w.writeChar(c.currentChar);
+            if (c.isComment() || c.isString()) {
+                c.getW().writeChar(c.getCurrentChar());
                 return;
             }
-            c.level--;
+            c.decLevel();
             c.writeTabs();
-            if (c.nextChar == '*') {
-                c.w.writeChar(c.currentChar);
+            if (c.getNextChar() == '*') {
+                c.getW().writeChar(c.getCurrentChar());
                 return;
             }
-            c.w.writeChar(c.currentChar);
-            c.w.writeChar('\n');
+            c.getW().writeChar(c.getCurrentChar());
+            c.getW().writeChar('\n');
         } catch (IOException ignored) {
 
         }

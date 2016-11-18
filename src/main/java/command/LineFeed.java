@@ -3,7 +3,7 @@ package command;
 import java.io.IOException;
 
 /**
- * for \n
+ * for \n.
  */
  class LineFeed implements Command {
     /**
@@ -12,12 +12,12 @@ import java.io.IOException;
      */
     public void execute(final Context c) {
         try {
-            if (!c.isComment) {
+            if (!c.isComment()) {
                 return;
             }
-            c.isComment = false;
-            c.w.writeChar(c.currentChar);
-            if (c.nextChar == '}') {
+            c.setIsComment(false);
+            c.getW().writeChar(c.getCurrentChar());
+            if (c.getNextChar() == '}') {
                 return;
             }
             c.writeTabs();

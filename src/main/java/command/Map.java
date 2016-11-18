@@ -29,11 +29,13 @@ public class Map {
     }
 
     /**
-     *
      * @param key condition
      * @return command
      */
-    public Command get(final Character key) {
-        return conditions.containsKey(key) ? conditions.get(key): conditions.get(null);
+    public final Command get(final Character key) {
+        if (conditions.containsKey(key)) {
+            return conditions.get(key);
+        }
+        return conditions.get(null);
     }
 }

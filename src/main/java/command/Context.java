@@ -6,50 +6,184 @@ import com.company.IWriter;
 import java.io.IOException;
 
 /**
- * Context
+ * Context.
  */
 public class Context {
     /**
-     * flags.
+     * string flag.
      */
-    boolean isString, isComment;
+    private boolean isString;
     /**
-     * blocks level.
+     * comment flag.
      */
-    int level;
+    private boolean isComment;
+    /**
+     * level of hierarchy.
+     */
+    private int level;
     /**
      * writer.
      */
-    public IWriter w;
+    private IWriter w;
     /**
      * reader.
      */
-    IReader r;
+    private IReader r;
     /**
-     * current and next chars.
+     * next char.
      */
-    public char nextChar, currentChar;
+    private char nextChar;
+    /**
+     * current char.
+     */
+    private char currentChar;
 
     /**
      * constructor.
-     * @param w writer
-     * @param r reader
+     *
+     * @param writer writer
+     * @param reader reader
      */
-    public Context(final IWriter w, final IReader r) {
-        this.w = w;
-        this.r = r;
+    public Context(final IWriter writer, final IReader reader) {
+        this.w = writer;
+        this.r = reader;
     }
 
     /**
      * write tabs.
      */
-    void writeTabs() {
-        for (int i = 0; i < level; ++i) {
+    final void writeTabs() {
+        for (int i = 0; i < getLevel(); ++i) {
             try {
-                w.writeChar('\t');
+                getW().writeChar('\t');
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * flags.
+     *
+     * @return bool
+     */
+    public final boolean isString() {
+        return isString;
+    }
+
+    /**
+     * set context to string.
+     * @param isStr bool
+     */
+    public final void setIsString(final boolean isStr) {
+        this.isString = isStr;
+    }
+
+    /**
+     * true if context is comment.
+     * @return bool
+     */
+    public final boolean isComment() {
+        return isComment;
+    }
+
+    /**
+     * set context to comment.
+     * @param comment bool
+     */
+    public final void setIsComment(final boolean comment) {
+        isComment = comment;
+    }
+
+    /**
+     * blocks level.
+     *
+     * @return level
+     */
+    public final int getLevel() {
+        return level;
+    }
+
+    /**
+     * decrease level of hierarchy.
+     */
+    public final void decLevel() {
+        --this.level;
+    }
+
+    /**
+     * increase level of hierarchy.
+     */
+    public final void incLevel() {
+        ++this.level;
+    }
+
+    /**
+     * writer.
+     *
+     * @return writer
+     */
+    public final IWriter getW() {
+        return w;
+    }
+
+    /**
+     * set writer.
+     *
+     * @param writer writer
+     */
+    public final void setW(final IWriter writer) {
+        this.w = writer;
+    }
+
+    /**
+     * reader.
+     *
+     * @return IReader
+     */
+    public final IReader getR() {
+        return r;
+    }
+
+    /**
+     * set reader.
+     *
+     * @param reader reader
+     */
+    public final void setR(final IReader reader) {
+        this.r = reader;
+    }
+
+    /**
+     * next and next chars.
+     *
+     * @return next char
+     */
+    public final char getNextChar() {
+        return nextChar;
+    }
+
+    /**
+     * current char.
+     *
+     * @return current char
+     */
+    public final char getCurrentChar() {
+        return currentChar;
+    }
+
+    /**
+     * set nextChar.
+     * @param ch char
+     */
+    public final void setCurrentChar(final char ch) {
+        this.currentChar = ch;
+    }
+    /**
+     * set nextChar.
+     * @param ch char
+     */
+    public final void setNextChar(final char ch) {
+        this.nextChar = ch;
     }
 }

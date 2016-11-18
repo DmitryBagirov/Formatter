@@ -3,7 +3,7 @@ package command;
 import java.io.IOException;
 
 /**
- * for other chars
+ * for other chars.
  */
 class Other implements Command {
     /**
@@ -12,8 +12,8 @@ class Other implements Command {
      */
     public void execute(final Context c) {
         try {
-            if (c.currentChar != '\r') {
-                c.w.writeChar(c.currentChar);
+            if (c.getCurrentChar() != '\r') {
+                c.getW().writeChar(c.getCurrentChar());
             }
         } catch (IOException e) {
             e.printStackTrace();

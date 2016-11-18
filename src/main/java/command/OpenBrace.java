@@ -3,7 +3,7 @@ package command;
 import java.io.IOException;
 
 /**
- * for {
+ * for {.
  */
 class OpenBrace implements Command {
     /**
@@ -12,13 +12,13 @@ class OpenBrace implements Command {
      */
     public void execute(final Context c) {
         try {
-            if (c.isComment || c.isString) {
-                c.w.writeChar(c.currentChar);
+            if (c.isComment() || c.isString()) {
+                c.getW().writeChar(c.getCurrentChar());
                 return;
             }
-            c.level++;
-            c.w.writeChar(c.currentChar);
-            c.w.writeChar('\n');
+            c.incLevel();
+            c.getW().writeChar(c.getCurrentChar());
+            c.getW().writeChar('\n');
             c.writeTabs();
         } catch (IOException ignored) {
 

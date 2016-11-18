@@ -3,7 +3,7 @@ package command;
 import java.io.IOException;
 
 /**
- * for "
+ * for ".
  */
 class Str implements Command {
     /**
@@ -12,10 +12,10 @@ class Str implements Command {
      */
     public void execute(final Context c) {
         try {
-            c.w.writeChar(c.currentChar);
+            c.getW().writeChar(c.getCurrentChar());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        c.isString = !c.isString;
+        c.setIsString(!c.isString());
     }
 }

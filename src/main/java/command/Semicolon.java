@@ -3,7 +3,7 @@ package command;
 import java.io.IOException;
 
 /**
- * for ;
+ * for ; .
  */
 class Semicolon implements Command {
     /**
@@ -12,12 +12,12 @@ class Semicolon implements Command {
      */
     public void execute(final Context c) {
         try {
-            c.w.writeChar(c.currentChar);
-            if (c.isComment || c.isString) {
+            c.getW().writeChar(c.getCurrentChar());
+            if (c.isComment() || c.isString()) {
                 return;
             }
-            if (c.nextChar != '/') {
-                c.w.writeChar('\n');
+            if (c.getNextChar() != '/') {
+                c.getW().writeChar('\n');
                 c.writeTabs();
             }
         } catch (IOException ignored) {

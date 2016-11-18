@@ -3,7 +3,7 @@ package command;
 import java.io.IOException;
 
 /**
- * for }
+ * for }.
  */
 class EndBlockComment implements Command {
     /**
@@ -12,15 +12,15 @@ class EndBlockComment implements Command {
      */
     public void execute(final Context c) {
         try {
-            if (c.nextChar == '/') {
-                c.w.writeChar('*');
-                c.w.writeChar('/');
-                c.w.writeChar('\n');
-                c.nextChar = c.r.readChar();
+            if (c.getNextChar() == '/') {
+                c.getW().writeChar('*');
+                c.getW().writeChar('/');
+                c.getW().writeChar('\n');
+                c.setNextChar(c.getR().readChar());
                 //nextChar = r.readChar();
                 return;
             }
-            c.w.writeChar(c.currentChar);
+            c.getW().writeChar(c.getCurrentChar());
         } catch (IOException ignored) {
 
         }

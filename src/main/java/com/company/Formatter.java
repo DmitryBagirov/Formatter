@@ -22,16 +22,17 @@ final class Formatter implements IFormatter {
      * @throws IOException     err
      * @throws ReaderException err
      */
-    public void format(final IReader r, final IWriter wr) throws IOException, ReaderException {
+    public void format(final IReader r, final IWriter wr)
+            throws IOException, ReaderException {
         Map m = new Map();
         Context c = new Context(wr, r);
-        c.currentChar = r.readChar();
+        c.setCurrentChar(r.readChar());
         while (r.hasChars()) {
-            c.nextChar = r.readChar();
-            m.get(c.currentChar).execute(c);
-            c.currentChar = c.nextChar;
+            c.setNextChar(r.readChar());
+            m.get(c.getCurrentChar()).execute(c);
+            c.setCurrentChar(c.getNextChar());
         }
-        c.w.writeChar(c.currentChar);
+        c.getW().writeChar(c.getCurrentChar());
         wr.close();
     }
 }

@@ -3,7 +3,7 @@ package command;
 import java.io.IOException;
 
 /**
- * for //
+ * for //.
  */
 class Comment implements Command {
     /**
@@ -12,17 +12,17 @@ class Comment implements Command {
      */
     public void execute(final Context c) {
         try {
-            if (c.nextChar == '/') {
-                c.isComment = true;
-                c.w.writeChar(c.currentChar);
+            if (c.getNextChar() == '/') {
+                c.setIsComment(true);
+                c.getW().writeChar(c.getCurrentChar());
                 return;
-            } else if (c.nextChar == '*') {
-                c.w.writeChar('/');
-                c.w.writeChar('*');
-                c.nextChar = c.r.readChar();
+            } else if (c.getNextChar() == '*') {
+                c.getW().writeChar('/');
+                c.getW().writeChar('*');
+                c.setNextChar(c.getR().readChar());
                 return;
             }
-            c.w.writeChar(c.currentChar);
+            c.getW().writeChar(c.getCurrentChar());
         } catch (IOException ignored) {
 
         }

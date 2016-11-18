@@ -3,7 +3,7 @@ package command;
 import java.io.IOException;
 
 /**
- * for "
+ * for ".
  */
 class Escape implements Command {
     /**
@@ -12,13 +12,13 @@ class Escape implements Command {
      */
     public void execute(final Context c) {
         try {
-            if (c.isString && c.nextChar == '"') {
-                c.w.writeChar(c.currentChar);
-                c.w.writeChar(c.nextChar);
-                c.nextChar = c.r.readChar();
-                return;
+            if (c.isString() && c.getNextChar() == '"') {
+                c.getW().writeChar(c.getCurrentChar());
+                c.getW().writeChar(c.getNextChar());
+                c.setNextChar(c.getR().readChar());
+                //return;
             }
-            c.isString = !c.isString;
+            //c.setIsString(!c.isString());
         } catch (IOException ignored) {
 
         }
