@@ -1,6 +1,8 @@
 package command;
 
-import java.io.IOException;
+import com.company.ReaderException;
+import com.company.WriterException;
+
 
 /**
  * for ".
@@ -9,8 +11,9 @@ class Escape implements Command {
     /**
      * handler.
      * @param c Context
+     * @throws CommandException err
      */
-    public void execute(final Context c) {
+    public void execute(final Context c) throws CommandException {
         try {
             if (c.isString() && c.getNextChar() == '"') {
                 c.getW().writeChar(c.getCurrentChar());
@@ -19,8 +22,9 @@ class Escape implements Command {
                 //return;
             }
             //c.setIsString(!c.isString());
-        } catch (IOException ignored) {
-
+        } catch (WriterException | ReaderException e) {
+            throw new CommandException(e.getMessage()
+                    + "\n" + "Error in Escape");
         }
     }
 }

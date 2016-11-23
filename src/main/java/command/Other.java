@@ -1,6 +1,7 @@
 package command;
 
-import java.io.IOException;
+import com.company.WriterException;
+
 
 /**
  * for other chars.
@@ -9,14 +10,16 @@ class Other implements Command {
     /**
      * handler.
      * @param c Context
+     * @throws CommandException err
      */
-    public void execute(final Context c) {
+    public void execute(final Context c) throws CommandException {
         try {
             if (c.getCurrentChar() != '\r') {
                 c.getW().writeChar(c.getCurrentChar());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (WriterException e) {
+            throw new CommandException(e.getMessage()
+                    + "\n" + "Error in Other");
         }
     }
 }

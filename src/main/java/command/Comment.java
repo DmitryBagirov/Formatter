@@ -1,6 +1,8 @@
 package command;
 
-import java.io.IOException;
+import com.company.ReaderException;
+import com.company.WriterException;
+
 
 /**
  * for //.
@@ -9,8 +11,9 @@ class Comment implements Command {
     /**
      * handler.
      * @param c context
+     * @throws CommandException err
      */
-    public void execute(final Context c) {
+    public void execute(final Context c) throws CommandException {
         try {
             if (c.getNextChar() == '/') {
                 c.setIsComment(true);
@@ -23,8 +26,9 @@ class Comment implements Command {
                 return;
             }
             c.getW().writeChar(c.getCurrentChar());
-        } catch (IOException ignored) {
-
+        } catch (WriterException | ReaderException e) {
+            throw new CommandException(e.getMessage()
+                    + "\n" + "Error in Comment");
         }
     }
 }

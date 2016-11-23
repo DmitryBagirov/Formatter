@@ -1,6 +1,5 @@
 package com.company;
 
-import java.io.IOException;
 
 /**
  * file reader.
@@ -14,7 +13,7 @@ public interface IReader {
 
     /**
      * @return read char from file
-     * @throws IOException error
+     * @throws ReaderException error
      */
-    char readChar() throws IOException;
+    char readChar() throws ReaderException;
 }

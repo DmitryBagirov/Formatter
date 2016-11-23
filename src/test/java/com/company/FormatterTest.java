@@ -17,7 +17,7 @@ public class FormatterTest {
     private Writer w;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, ReaderException, WriterException {
         f = new Formatter();
         r = new Reader("input");
         w = new Writer("output");

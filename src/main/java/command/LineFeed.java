@@ -1,6 +1,7 @@
 package command;
 
-import java.io.IOException;
+import com.company.WriterException;
+
 
 /**
  * for \n.
@@ -9,8 +10,9 @@ import java.io.IOException;
     /**
      * handler.
      * @param c context
+     * @throws CommandException err
      */
-    public void execute(final Context c) {
+    public void execute(final Context c) throws CommandException {
         try {
             if (!c.isComment()) {
                 return;
@@ -21,8 +23,9 @@ import java.io.IOException;
                 return;
             }
             c.writeTabs();
-        } catch (IOException ignored) {
-
+        } catch (WriterException e) {
+            throw new CommandException(e.getMessage()
+                    + "\n" + "Error in LineFeed");
         }
     }
 }

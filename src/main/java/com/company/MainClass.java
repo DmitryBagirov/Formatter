@@ -1,6 +1,5 @@
 package com.company;
 
-import java.io.IOException;
 
 /**
  *
@@ -14,11 +13,12 @@ final class MainClass {
     /**
      *
      * @param args params from command line
-     * @throws IOException exception
+     * @throws WriterException exception
      * @throws ReaderException exception
+     * @throws FormatterException exception
      */
     public static void main(final String[] args)
-            throws IOException, ReaderException {
+            throws ReaderException, WriterException, FormatterException {
 //        if (args.length < 2) {
 //            System.out.print("Error! PLease set input and "
 //                    + "output filename as parameter\n");

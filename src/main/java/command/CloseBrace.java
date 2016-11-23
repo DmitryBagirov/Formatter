@@ -1,6 +1,7 @@
 package command;
 
-import java.io.IOException;
+import com.company.WriterException;
+
 
 /**
  * for }.
@@ -8,9 +9,11 @@ import java.io.IOException;
 class CloseBrace implements Command {
     /**
      * handler.
+     *
      * @param c context
+     * @throws CommandException err
      */
-    public void execute(final Context c) {
+    public void execute(final Context c) throws CommandException {
         try {
             if (c.isComment() || c.isString()) {
                 c.getW().writeChar(c.getCurrentChar());
@@ -24,8 +27,9 @@ class CloseBrace implements Command {
             }
             c.getW().writeChar(c.getCurrentChar());
             c.getW().writeChar('\n');
-        } catch (IOException ignored) {
-
+        } catch (WriterException e) {
+            throw new CommandException(e.getMessage()
+                    + "\n" + "Error in CloseBrace");
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.company;
 
-import java.io.IOException;
 
 /**
  * file writer.
@@ -10,14 +9,14 @@ public interface IWriter {
      * write char to file.
      *
      * @param ch character
-     * @throws IOException err
+     * @throws WriterException err
      */
-    void writeChar(char ch) throws IOException;
+    void writeChar(char ch) throws WriterException;
 
     /**
      * close file.
      *
-     * @throws IOException err
+     * @throws WriterException err
      */
-    void close() throws IOException;
+    void close() throws WriterException;
 }

@@ -15,10 +15,14 @@ class Reader implements IReader {
     private BufferedReader buffer;
     /**
      * @param file Input file name
-     * @throws FileNotFoundException throws when file not found
+     * @throws ReaderException throws when file not found
      */
-    Reader(final String file) throws FileNotFoundException {
-        buffer = new BufferedReader(new FileReader(file));
+    Reader(final String file) throws ReaderException {
+        try {
+            buffer = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException e) {
+            throw new ReaderException("File can`t be read");
+        }
     }
 
     /**
@@ -29,15 +33,19 @@ class Reader implements IReader {
         try {
             return buffer.ready();
         } catch (IOException e) {
-            throw new ReaderException("no more chars");
+            throw new ReaderException("No more chars");
         }
     }
 
     /**
      * @return read char from file
-     * @throws IOException error
+     * @throws ReaderException error
      */
-    public char readChar() throws IOException {
-        return (char) buffer.read();
+    public char readChar() throws ReaderException {
+        try {
+            return (char) buffer.read();
+        } catch (IOException e) {
+            throw new ReaderException("Char can`t be read");
+        }
     }
 }

@@ -15,28 +15,40 @@ class Writer implements IWriter {
 
     /**
      * @param file file name
-     * @throws IOException err
+     * @throws WriterException err
      */
-    Writer(final String file) throws IOException {
-        buffer = new BufferedWriter(new FileWriter(file));
+    Writer(final String file) throws WriterException {
+        try {
+            buffer = new BufferedWriter(new FileWriter(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * write char to file.
      *
      * @param ch character
-     * @throws IOException err
+     * @throws WriterException err
      */
-    public void writeChar(final char ch) throws IOException {
-        buffer.append(ch);
+    public void writeChar(final char ch) throws WriterException {
+        try {
+            buffer.append(ch);
+        } catch (IOException e) {
+            throw new WriterException();
+        }
     }
 
     /**
      * close file.
      *
-     * @throws IOException err
+     * @throws WriterException err
      */
-    public void close() throws IOException {
-        buffer.close();
+    public void close() throws WriterException {
+        try {
+            buffer.close();
+        } catch (IOException e) {
+            throw new WriterException();
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.company;
 
-import java.io.IOException;
 
 /**
  * Interface for formatter.
@@ -12,8 +11,7 @@ interface IFormatter {
      *
      * @param r  input
      * @param w  output
-     * @throws IOException err
-     * @throws ReaderException err
+     * @throws FormatterException err
      */
-    void format(IReader r, IWriter w) throws IOException, ReaderException;
+    void format(IReader r, IWriter w) throws FormatterException;
 }

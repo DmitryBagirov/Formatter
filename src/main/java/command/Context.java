@@ -2,8 +2,8 @@ package command;
 
 import com.company.IReader;
 import com.company.IWriter;
+import com.company.WriterException;
 
-import java.io.IOException;
 
 /**
  * Context.
@@ -51,14 +51,11 @@ public class Context {
 
     /**
      * write tabs.
+     * @throws WriterException err
      */
-    final void writeTabs() {
+    final void writeTabs() throws WriterException {
         for (int i = 0; i < getLevel(); ++i) {
-            try {
-                getW().writeChar('\t');
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            getW().writeChar('\t');
         }
     }
 
