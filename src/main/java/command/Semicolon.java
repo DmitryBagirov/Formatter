@@ -18,6 +18,9 @@ class Semicolon implements Command {
             if (c.isComment() || c.isString()) {
                 return;
             }
+            if (c.getNextChar() == '}') {
+                c.decLevel();
+            }
             if (c.getNextChar() != '/') {
                 c.getW().writeChar('\n');
                 c.writeTabs();
