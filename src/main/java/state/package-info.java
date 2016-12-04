@@ -1,4 +1,0 @@
-/**
- * Package information.
- */
-package state;
