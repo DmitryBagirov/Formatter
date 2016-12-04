@@ -19,14 +19,14 @@ final class MainClass {
      */
     public static void main(final String[] args)
             throws ReaderException, WriterException, FormatterException {
-//        if (args.length < 2) {
-//            System.out.print("Error! PLease set input and "
-//                    + "output filename as parameter\n");
-//            return;
-//        }
+        if (args.length < 2) {
+            System.out.print("Error! PLease set input and "
+                    + "output filename as parameter\n");
+            return;
+        }
         Formatter f = new Formatter();
-        Reader r = new Reader("input");
-        Writer w = new Writer("output");
+        Writer w = new Writer(args[1]);
+        Reader r = new Reader(args[0]);
         f.format(r, w);
     }
 }
