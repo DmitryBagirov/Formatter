@@ -1,4 +1,4 @@
-package com.company;
+package reader;
 
 /**
  * Class for read strings.

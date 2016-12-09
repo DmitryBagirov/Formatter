@@ -1,4 +1,4 @@
-package com.company;
+package writer;
 
 /**
  * Class for write strings.
@@ -13,7 +13,7 @@ public class StringWriter implements IWriter {
     /**
      * constructor.
      */
-    StringWriter() {
+    public StringWriter() {
         result = new StringBuilder();
     }
 

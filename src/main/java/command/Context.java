@@ -1,8 +1,8 @@
 package command;
 
-import com.company.IReader;
-import com.company.IWriter;
-import com.company.WriterException;
+import reader.IReader;
+import writer.IWriter;
+import writer.WriterException;
 
 
 /**

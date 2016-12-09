@@ -1,6 +1,6 @@
 package command;
 
-import com.company.WriterException;
+import writer.WriterException;
 
 
 /**

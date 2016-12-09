@@ -1,4 +1,4 @@
-package com.company;
+package reader;
 
 /**
  * Exception for reader.

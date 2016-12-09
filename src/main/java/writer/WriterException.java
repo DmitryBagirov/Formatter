@@ -1,4 +1,4 @@
-package com.company;
+package writer;
 
 /**
  * Exception for writer.

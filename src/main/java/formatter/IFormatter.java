@@ -1,5 +1,8 @@
-package com.company;
+package formatter;
 
+
+import reader.IReader;
+import writer.IWriter;
 
 /**
  * Interface for formatter.

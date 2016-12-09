@@ -1,7 +1,7 @@
 package command;
 
-import com.company.ReaderException;
-import com.company.WriterException;
+import reader.ReaderException;
+import writer.WriterException;
 
 
 /**

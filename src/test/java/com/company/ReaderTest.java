@@ -2,6 +2,7 @@ package com.company;
 
 import org.junit.Before;
 import org.junit.Test;
+import reader.*;
 
 import java.io.*;
 
@@ -11,11 +12,11 @@ import static org.junit.Assert.*;
  * Test for reader.
  */
 public class ReaderTest {
-    private Reader r;
+    private reader.Reader r;
     private BufferedReader rr;
     @Before
     public void setUp() throws Exception {
-        r = new Reader("input");
+        r = new reader.Reader("input");
         rr = new BufferedReader(new FileReader("input"));
     }
 

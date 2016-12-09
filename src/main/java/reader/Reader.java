@@ -1,4 +1,4 @@
-package com.company;
+package reader;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Class for read from files.
  */
-class Reader implements IReader {
+public class Reader implements IReader {
     /**
      * file.
      */
@@ -17,7 +17,7 @@ class Reader implements IReader {
      * @param file Input file name
      * @throws ReaderException throws when file not found
      */
-    Reader(final String file) throws ReaderException {
+    public Reader(final String file) throws ReaderException {
         try {
             buffer = new BufferedReader(new FileReader(file));
         } catch (FileNotFoundException e) {
@@ -29,7 +29,7 @@ class Reader implements IReader {
      * @return returns false if EOF otherwise true
      * @throws ReaderException error
      */
-    public boolean hasChars() throws ReaderException {
+    public final boolean hasChars() throws ReaderException {
         try {
             return buffer.ready();
         } catch (IOException e) {
@@ -41,7 +41,7 @@ class Reader implements IReader {
      * @return read char from file
      * @throws ReaderException error
      */
-    public char readChar() throws ReaderException {
+    public final char readChar() throws ReaderException {
         try {
             return (char) buffer.read();
         } catch (IOException e) {

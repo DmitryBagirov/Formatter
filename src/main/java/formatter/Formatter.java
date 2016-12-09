@@ -1,16 +1,20 @@
-package com.company;
+package formatter;
 import command.CommandException;
 import command.Context;
 import  command.Map;
+import reader.IReader;
+import reader.ReaderException;
+import writer.IWriter;
+import writer.WriterException;
 
 /**
  * code formatter.
  */
-final class Formatter implements IFormatter {
+public final class Formatter implements IFormatter {
     /**
      * constructor lego.
      */
-    Formatter() {
+    public Formatter() {
 
     }
 

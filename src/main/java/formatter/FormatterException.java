@@ -1,4 +1,4 @@
-package com.company;
+package formatter;
 
 /**
  * Exception for formatter.

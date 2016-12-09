@@ -15,7 +15,10 @@ import static org.junit.Assert.*;
 public class MainClassTest {
     @Test
     public void main() throws Exception {
-        MainClass.main(null);
+        String args[] = {"input", "output"};
+        String arg[] = {"tt"};
+        MainClass.main(args);
+        MainClass.main(arg);
     }
     @Test
     public void testConstructorIsPrivate() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
